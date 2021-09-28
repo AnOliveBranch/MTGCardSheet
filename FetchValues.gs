@@ -1,4 +1,4 @@
-var access_token = "[redacted]"
+var access_token = CardLibrary.bearerToken;
 var options = { method: 'get', headers: { Accept: 'application/json', Authorization: 'bearer ' + access_token } };
 var cardSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Card List');
 var dropdownSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Dropdowns'); 
@@ -10,13 +10,6 @@ function test() {
   //url = "https://api.tcgplayer.com/catalog/products/203538?getExtendedFields=true"
   url = "https://api.tcgplayer.com/catalog/products?productName=Shapeshifter Token (001) &groupName=Modern Horizons"
   var response = UrlFetchApp.fetch(url, options);
-  Logger.log(response);
-}
-
-function getNewAccessToken() {
-  var url = "https://api.tcgplayer.com/token";
-  var accessOptions = { method: 'post', headers: { Accept: 'application/x-www-form-urlencoded'}, payload: 'grant_type=client_credentials&client_id=[redacted]&client_secret=[redacted]'}
-  var response = UrlFetchApp.fetch(url, accessOptions);
   Logger.log(response);
 }
 
