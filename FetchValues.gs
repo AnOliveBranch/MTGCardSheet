@@ -1,4 +1,4 @@
-var access_token = CardLibrary.bearerToken;
+var access_token = CardLibrary.getToken();
 var options = { method: 'get', headers: { Accept: 'application/json', Authorization: 'bearer ' + access_token } };
 var cardSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Card List');
 var dropdownSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Dropdowns'); 
