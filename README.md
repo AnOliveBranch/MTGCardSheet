@@ -8,6 +8,8 @@ To use this, a couple of things would need to be done. First, you need to apply 
 
 To copy the sheet, open the [sheet](https://docs.google.com/spreadsheets/d/1zdMBwkbjX_JPWCNWO0-qNcOaHB_9JA4JDOWHxhDbpd4/edit#gid=28962468), go to `File`, `Make a Copy` and choose a name and location.
 
+Go to the `Card List` sheet and delete all entries except the header row. Do the same for the `Dropdowns` sheet.
+
 Setting up the API Key Library
 -----
 You will need to create a second sheet for the purpose of holding your API keys. Keep this sheet private. Open the script editor, and paste in the contents of `APITokens.gs` into the script. Once you have API approval, replace the public and private keys in `getNewAccessToken()`. Set the `sheetUrl` to the URL of the private sheet. Click `Deploy` in the top right corner, click `New Deployment`, the type should be `Library`. Give it a description, then click `Deploy`. Go to the settings cog on the left side of the screen, and copy the `Script ID`. Go back to your main sheet with the other four scripts. Click the `+` on `Libraries` on the left side panel, and paste in the Script ID you just copied, and click `Look Up`. Keep the version as `HEAD (Development Mode)` and make the identifier `CardLibrary`, then click `Add`.
