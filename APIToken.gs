@@ -43,7 +43,8 @@ function getToken() {
 
   // Check token expiration against current date
   var d = Date.parse(new Date());
-  if (expiration == null || token == null || d > expiration) {
+  // Make new token if current will expire in less than an hour (or has expired)
+  if (expiration == null || token == null || d-3600000 > expiration) {
     // Token is expired, gen a new one and re-set the values
     genToken();
     dataRange = tokenSheet.getDataRange();
