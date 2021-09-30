@@ -28,6 +28,11 @@ function getFinalSortOrder() {
     var columnNum = convertColumn(sortOrder[i]);
     var asc = sortOrder[i+1];
 
+    // Ensure headers are correct, script will throw error if not
+    if (columnNum == null) {
+      throw new Error('Failed: Could not get column number for ' + sortOrder[i]);
+    }
+    
     // Create the pair and add it to the list
     var pair = { column : columnNum, ascending: asc };
     columnOrder.push(pair);
