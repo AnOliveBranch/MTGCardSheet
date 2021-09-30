@@ -1,4 +1,4 @@
-This project is a series of Google Apps Script files that I use for cataloging my own personal card collection found [here](https://docs.google.com/spreadsheets/d/1zdMBwkbjX_JPWCNWO0-qNcOaHB_9JA4JDOWHxhDbpd4/edit#gid=28962468)
+This project is a series of Google Apps Script files that I use for cataloging my own personal card collection found [here](https://docs.google.com/spreadsheets/d/1kSjLEFF0AYMtQDsUUzrm2xoRvXF1fmgD8GlVFtpxCbQ/edit#gid=28962468) (this sheet used as a template & demonstration, actual collection held elsewhere)
 
 It uses [TCGPlayer](https://www.tcgplayer.com/)'s API to fetch information on the cards and their values.
 
@@ -6,9 +6,9 @@ Sheet setup
 -----
 To use this, a couple of things would need to be done. First, you need to apply and be approved for TCGPlayer's API, which can be done [here](https://developer.tcgplayer.com/developer-application-form.html). You will also need to create a new Google Sheet. You could either make a copy of my existing sheet or make your own. If you make your own sheet, you'll need to go to `Tools`, then `Script Editor` and create the `UpdateFilters.gs`, `FetchValues.gs`, `UpdateStatistics.gs`, and `SortCards.gs` files, pasting in the code.
 
-To copy the sheet, open the [sheet](https://docs.google.com/spreadsheets/d/1zdMBwkbjX_JPWCNWO0-qNcOaHB_9JA4JDOWHxhDbpd4/edit#gid=28962468), go to `File`, `Make a Copy` and choose a name and location.
+To copy the sheet, open the [sheet](https://docs.google.com/spreadsheets/d/1kSjLEFF0AYMtQDsUUzrm2xoRvXF1fmgD8GlVFtpxCbQ/edit#gid=28962468), go to `File`, `Make a Copy` and choose a name and location.
 
-Go to the `Card List` sheet and delete all entries except the header row. Do the same for the `Dropdowns` sheet.
+Go to the `Card List` sheet and delete all entries except the header row. Do the same for the `Dropdowns` sheet. Open the script editor and delete the `CardLibrary` Library entry (Libraries are private, the one being copied won't work for you).
 
 Setting up the API Key Library
 -----
