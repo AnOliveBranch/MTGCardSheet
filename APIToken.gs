@@ -36,6 +36,9 @@ function genToken() {
 }
 
 function getToken() {
+  if (tokenSheet.getRange(1, 1).getValue() == '') {
+    tokenSheet.deleteRow(1);
+  }
   // Get the bottom entries of the sheet
   var dataRange = tokenSheet.getDataRange();
   var expiration = tokenSheet.getRange(dataRange.getNumColumns(), 1).getValue();
