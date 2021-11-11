@@ -12,7 +12,9 @@ Go to the `Card List` sheet and delete all entries except the header row. Do the
 
 Setting up the API Key Library
 -----
-You will need to create a second sheet for the purpose of holding your API keys. Keep this sheet private. Open the script editor, and paste in the contents of `APITokens.gs` into the script. Once you have API approval, replace the public and private keys in `getNewAccessToken()`. Set the `sheetUrl` to the URL of the private sheet. Click `Deploy` in the top right corner, click `New Deployment`, the type should be `Library`. Give it a description, then click `Deploy`. Go to the settings cog on the left side of the screen, and copy the `Script ID`. Go back to your main sheet with the other four scripts. Click the `+` on `Libraries` on the left side panel, and paste in the Script ID you just copied, and click `Look Up`. Keep the version as `HEAD (Development Mode)` and make the identifier `CardLibrary`, then click `Add`.
+You will need to create a second sheet for the purpose of holding your API keys. Keep this sheet private. Open the script editor, and paste in the contents of `APITokens.gs` into the script and save. Once you have API approval, replace the public and private keys in `getNewAccessToken()`. Set the `sheetUrl` to the URL of the private sheet. Click `Deploy` in the top right corner, click `New Deployment`, the type should be `Library`. Give it a description, then click `Deploy`. Go to the settings cog on the left side of the screen, and copy the `Script ID`. 
+
+Go back to your main sheet with the other four scripts. Click the `+` on `Libraries` on the left side panel, and paste in the Script ID you just copied, and click `Look Up`. Keep the version as `HEAD (Development Mode)` and make the identifier `CardLibrary`, then click `Add`.
 
 Modifying your sheet
 -----
