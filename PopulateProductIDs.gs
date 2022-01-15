@@ -1,10 +1,10 @@
 /*
-  This script will attempt to fill a TCGPlayer product ID for each item in the 'Card List' sheet
-  It uses information like card name, collector number, set, and rarity to search TCGPlayer's API
-  These product IDs will later be used to fetch pricing information in a different script
-
-  Source code by Ryan Henderson, 2022
-  Licensed under GPLv3
+ * This script will attempt to fill a TCGPlayer product ID for each item in the 'Card List' sheet
+ * It uses the card name and set to search TCGPlayer's API
+ * These product IDs will later be used to fetch pricing information in a different script
+ *
+ * Source code by Ryan Henderson, 2022
+ * Licensed under GPLv3
 */
 
 var access_token = CardLibrary.getToken();
@@ -18,7 +18,7 @@ var cardSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Card List'
 function populateProductIds() {
   let range = cardSheet.getDataRange().offset(1, 0);
   let vals = range.getValues();
-  let currentProductIds = getProductIdList(vals);
+  let currentProductIds = getItemListFromColumn(vals, 0);
   let sets = getSetListNoProductId(vals);
   let cardSetInfo = new Map();
 
@@ -78,7 +78,7 @@ function getCardsFromSet(cardSet, counter=0, cards=new Map()) {
 */
 function getProductId(cardName, cardSetMap) {
   let id = cardSetMap.get(cardName);
-  return id === undefined ? null: id.toString();
+  return id === undefined ? null : id.toString();
 }
 
 /*
@@ -106,7 +106,7 @@ function getSetListNoProductId(range) {
  * 
  * @param {string[][]} range Values of DataRange of cards in the sheet
  * @param {string} setName Name of set to search for
- * @return {Map<string, number>} List of cards in setName with no product ID and their row
+ * @return {Map<number, string>} List of cards in setName with no product ID and their row
 */
 function getCardsFromSetNoProductId(range, setName) {
   let numRows = range.length;
@@ -126,19 +126,19 @@ function getCardsFromSetNoProductId(range, setName) {
 }
 
 /*
- * Returns the list of product IDs currently existing in the sheet
+ * Returns the list of items currently existing in the sheet for a given column
  * 
  * @param {string[][]} range Values of DataRange of cards in the sheet
- * @return {string[][]} List of product IDs in the format [[%id1%],[%id2%],...]
+ * @return {string[][]} List of values in the format [[%value1%],[%value2%],...]
 */
-function getProductIdList(range) {
+function getItemListFromColumn(range, column) {
   let numRows = range.length;
-  let productIds = [];
+  let values = [];
   for (let i = 0; i < numRows; i++) {
-    productIds.push([range[i][0].toString()]);
+    values.push([range[i][column].toString()]);
   }
-  productIds.pop();
-  return productIds;
+  values.pop();
+  return values;
 }
 
 /*
