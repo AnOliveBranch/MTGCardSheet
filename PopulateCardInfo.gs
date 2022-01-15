@@ -9,10 +9,13 @@
 var access_token = CardLibrary.getToken();
 var options = { method: 'get', headers: { Accept: 'application/json', Authorization: 'bearer ' + access_token } };
 var cardSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Card List');
+var dropdownSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Dropdowns'); 
 
 /*
  * Primary function to fill card info in cardSheet
  * Looks through sheet for cards with missing rarity and fills rarity and collector number
+ * 
+ * Then updates the dropdowns sheet with the most recent information
 */
 function populateCardInfo() {
   let range = cardSheet.getDataRange().offset(1, 0);
@@ -39,6 +42,14 @@ function populateCardInfo() {
   collectorNumberRange.setValues(currentCollectorNumbers);
   let rarityRange = cardSheet.getRange(2, 6, vals.length-1);
   rarityRange.setValues(currentRarities);
+
+  dropdownSheet.getDataRange().offset(1, 0).clear();
+  let headerRange = cardSheet.getRange(1, 1, 1, 11);
+  headerRange.getValues()[0].forEach(function (value) {
+    if (getDropdownColumn(value) != -1) {
+      generateDropdowns(value);
+    }
+  });
 }
 
 /*
@@ -183,4 +194,53 @@ function getItemListFromColumn(range, column) {
   }
   values.pop();
   return values;
+}
+
+/*
+ * Returns the column number with title of the given attritube in the Dropdowns sheet
+ * 
+ * @param {string} attribute Name of the attribute
+ * @return {number} Index of the column where attribute is the header
+*/
+function getDropdownColumn(attribute) {
+  let data = dropdownSheet.getRange('A1:Z1').getValues();
+  return data[0].indexOf(attribute);
+}
+
+/*
+ * Fills the column in the Dropdowns sheet with the values from cardSheet
+ * 
+ * @param {string} attribute Column to fill
+*/
+function generateDropdowns(attribute) {
+  let entries = getDropdownEntries(attribute);
+  let range = dropdownSheet.getRange(2, getDropdownColumn(attribute) + 1, entries.length);
+  range.setValues(entries);
+}
+
+/*
+ * Returns the list of items to fill in the Dropdowns sheet for an attribute
+ * 
+ * @param {string} attribute Column to get values for
+ * @return {array[string]} Values to fill in the column
+*/
+function getDropdownEntries(attribute) {
+  let headers = cardSheet.getRange('A1:Z1').getValues();
+  let column = headers[0].indexOf(attribute);
+  let range = cardSheet.getRange(2, column + 1, cardSheet.getLastRow());
+  let rangeVals = range.getValues();
+  let entries = [];
+  for (let i = 0; i < rangeVals.length; i++) {
+    let val = rangeVals[i][0];
+    if (!entries.includes(val) && val !== '') {
+      entries.push(val);
+    }
+  }
+  entries.sort();
+  entries.unshift('Any');
+  let nestedEntries = [];
+  for (let i = 0; i < entries.length; i++) {
+    nestedEntries.push([entries[i]]);
+  }
+  return nestedEntries;
 }
