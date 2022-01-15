@@ -1,14 +1,14 @@
-This project is a series of Google Apps Script files that I use for cataloging my own personal card collection found [here](https://docs.google.com/spreadsheets/d/1kSjLEFF0AYMtQDsUUzrm2xoRvXF1fmgD8GlVFtpxCbQ/edit#gid=28962468) (this sheet used as a template & demonstration, actual collection held elsewhere)
+This project is a series of Google Apps Script files that I use for cataloging my own personal card collection found [here](https://docs.google.com/spreadsheets/d/1_zD-1VYKzvuM7W_ja9X6SWEYxPK_HNof1y0orEvWdWY/edit?usp=sharing) (this sheet used as a template & demonstration, actual collection held elsewhere)
 
 It uses [TCGPlayer](https://www.tcgplayer.com/)'s API to fetch information on the cards and their values.
 
 Sheet setup
 -----
-To use this, a couple of things would need to be done. First, you need to apply and be approved for TCGPlayer's API, which can be done [here](https://developer.tcgplayer.com/developer-application-form.html). You will also need to create a new Google Sheet. You could either make a copy of my existing sheet or make your own. If you make your own sheet, you'll need to go to `Tools`, then `Script Editor` and create the `UpdateFilters.gs`, `FetchValues.gs`, `UpdateStatistics.gs`, and `SortCards.gs` files, pasting in the code.
+To use this, a couple of things would need to be done. First, you need to apply and be approved for TCGPlayer's API, which can be done [here](https://developer.tcgplayer.com/developer-application-form.html). You will also need to create a new Google Sheet. You could either make a copy of my existing sheet or make your own. If you make your own sheet, you'll need to go to `Tools`, then `Script Editor` and create the all of the `.gs` files (except `APIToken.gs`) and paste in the code.
 
-To copy the sheet, open the [sheet](https://docs.google.com/spreadsheets/d/1kSjLEFF0AYMtQDsUUzrm2xoRvXF1fmgD8GlVFtpxCbQ/edit#gid=28962468), go to `File`, `Make a Copy` and choose a name and location.
+To copy the sheet, open the [sheet](https://docs.google.com/spreadsheets/d/1_zD-1VYKzvuM7W_ja9X6SWEYxPK_HNof1y0orEvWdWY/edit?usp=sharing), go to `File`, `Make a Copy` and choose a name and location.
 
-Go to the `Card List` sheet and delete all entries except the header row. Do the same for the `Dropdowns` sheet. Open the script editor and delete the `CardLibrary` Library entry (Libraries are private, the one being copied won't work for you).
+Go to the `Card List` sheet and delete all entries except the header row. Open the script editor and delete the `CardLibrary` Library entry (Libraries are private, the one being copied won't work for you).
 
 Setting up the API Key Library
 -----
@@ -18,8 +18,8 @@ Go back to your main sheet with the other four scripts. Click the `+` on `Librar
 
 Modifying your sheet
 -----
-The scripts are setup very specifically to work with my sheet layout. You could change the sheet layout if desired, you'd just have to change some of the code as well to reflect that. TODO: Add comments to the code to show what values might need changing and to explain what the code does.
+The scripts are setup very specifically to work with my sheet layout. You could change the sheet layout if desired, you'd just have to change some of the code as well to reflect that. 
 
 Using the sheet
 -----
-Once you have your sheet setup, here's how to actually use it. Go to the `Card List` sheet on the bottom. For each card, put the TCGPlayer product ID (I use a database from [MTGJSON](https://mtgjson.com/)), whether the card is foiled or not (`Y` or `N`), the quantity of that card you have, where it is, its color identity, and type. For card games other than Magic: The Gathering these fields may need to be changed, which would mean changing the code. Once you've put in your product IDs (you can do lots at once), go back to the `Overview` sheet and click the `Update Card Info & Pricing` button. Depending on how many cards you have, this process may take a while. Once it's finished, the `Update Statistics` button will update all of the statistics about the collection on the overview page. The `Sort Cards` button will sort the `Card List` sheet according to the order listed in `SortCards.gs`. Finally, `Update Filters` will copy cards that match the filter options into the `Filtered Cards` sheet.
+Once you have your sheet setup, here's how to actually use it. Go to the `Card List` sheet on the bottom. For each card, enter the card name, set, quantity, location, color identity, and type. For card games other than Magic: The Gathering these fields may need to be changed, which would mean changing the code. Once you've put in the card names and sets, go back to the `Overview` sheet and click the `Populate Product IDs` button to fill out the product IDs for each card. Depending on how many cards you have, this process may take a while. Then click the `Populate Card Info` button to get the collector number and rarity of each card. Finally, click the `Update Pricing` button to fill the value column. Once everything is finished, the `Update Statistics` button will update all of the statistics about the collection on the overview page. The `Sort Cards` button will sort the `Card List` sheet according to the order listed in `SortCards.gs`. Finally, `Update Filters` will copy cards that match the filter options into the `Filtered Cards` sheet.
