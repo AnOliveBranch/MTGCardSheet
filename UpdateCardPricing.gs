@@ -27,7 +27,7 @@ function updateAllPrices() {
   let pricingData = getPricingData(allProductIds, 0, prices);
   let valueColumn = [];
 
-  for (let i = 0; i < vals.length - 1; i++) {
+  for (let i = 0; i < allProductIds.length; i++) {
     let productId = vals[i][0].toString();
     let foil = vals[i][1] === 'Y';
     let pricing = pricingData.get(productId);
@@ -38,7 +38,7 @@ function updateAllPrices() {
     }
   }
   
-  let valueRange = cardSheet.getRange(2, 7, vals.length-1);
+  let valueRange = cardSheet.getRange(2, 7, allProductIds.length);
   valueRange.setValues(valueColumn);
 
   let dateRange = overviewSheet.getRange(8, 7);
@@ -100,10 +100,9 @@ function getProductIdList(range) {
   let numRows = range.length;
   let values = [];
   for (let i = 0; i < numRows; i++) {
-    if (!values.includes(range[i][0].toString())) {
+    if (range[i][0].toString() !== '') {
       values.push(range[i][0].toString());
     }
   }
-  values.pop();
   return values;
 }
