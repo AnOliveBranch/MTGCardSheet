@@ -26,11 +26,13 @@ function updateAllPrices() {
 
   let pricingData = getPricingData(allProductIds, 0, prices);
   let valueColumn = [];
-
   for (let i = 0; i < allProductIds.length; i++) {
     let productId = vals[i][0].toString();
     let foil = vals[i][1] === 'Y';
     let pricing = pricingData.get(productId);
+    if (pricing === null) {
+      throw new Error(`Could not find pricing data for product ID ${productId}`);
+    }
     if (foil) {
       valueColumn.push([pricing[1]]);
     } else {
