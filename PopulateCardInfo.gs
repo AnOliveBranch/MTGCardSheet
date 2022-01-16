@@ -33,6 +33,9 @@ function populateCardInfo() {
     let cardsInSet = getCardsFromSetNoRarity(vals, setName);
     for (const [rowNum, cardName] of cardsInSet.entries()) {
       let extendedData = getExtendedData(cardName, cardList);
+      if (extendedData === null) {
+        throw new Error(`Could not find card info for ${cardName} in set ${setName} on row ${rowNum}`);
+      }
       currentCollectorNumbers[rowNum-2] = [extendedData[0]];
       currentRarities[rowNum-2] = [extendedData[1]];
     }
