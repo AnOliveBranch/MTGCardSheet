@@ -23,13 +23,16 @@ function populateProductIds() {
   let cardSetInfo = new Map();
 
   sets.forEach(function (cardSet) {
-    cardSetInfo.set(cardSet, getCardsFromSet(cardSet));
+    cardSetInfo.set(cardSet, getCardProductIDsFromSet(cardSet));
   });
 
   for (const [setName, cardList] of cardSetInfo.entries()) {
     let cardsInSet = getCardsFromSetNoProductId(vals, setName);
     for (const [rowNum, cardName] of cardsInSet.entries()) {
       let productId = getProductId(cardName, cardList);
+      if (productId === null) {
+        throw new Error(`Could not find product ID for ${cardName} in set ${setName} on row ${rowNum}`);
+      }
       currentProductIds[rowNum-2] = [productId];
     }
   }
@@ -46,7 +49,7 @@ function populateProductIds() {
  * @param {Map<string, number>} cards List of cards for recursion
  * @return {Map<string, number>} List of cards and their product IDs within cardSet
 */
-function getCardsFromSet(cardSet, counter=0, cards=new Map()) {
+function getCardProductIDsFromSet(cardSet, counter=0, cards=new Map()) {
   let url = `https://api.tcgplayer.com/catalog/products?groupName=${convertEscapeCharacters(cardSet)}&productTypes=Cards&limit=100&offset=${counter*100}`;
   let response;
   try {
@@ -66,7 +69,7 @@ function getCardsFromSet(cardSet, counter=0, cards=new Map()) {
   json.results.forEach(function (cardInfo) {
     cards.set(cardInfo.name, cardInfo.productId);
   });
-  return getCardsFromSet(cardSet, counter+1, cards);
+  return getCardProductIDsFromSet(cardSet, counter+1, cards);
 }
 
 /*
