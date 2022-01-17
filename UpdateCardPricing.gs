@@ -28,10 +28,14 @@ function updateAllPrices() {
   let valueColumn = [];
   for (let i = 0; i < allProductIds.length; i++) {
     let productId = vals[i][0].toString();
+    if (productId === '') {
+      valueColumn.push(['']);
+      continue;
+    }
     let foil = vals[i][1] === 'Y';
     let pricing = pricingData.get(productId);
-    if (pricing === null) {
-      throw new Error(`Could not find pricing data for product ID ${productId}`);
+    if (pricing[0] === -1 && pricing[1] === -1) {
+      throw new Error(`Could not find pricing data for product ID ${productId} on line ${i+2}`);
     }
     if (foil) {
       valueColumn.push([pricing[1]]);
